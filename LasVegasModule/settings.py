@@ -1,24 +1,10 @@
-
 """
 화면 크기 설정
 FHD(1920 * 1080) 기준 가로, 세로 0.6배
 """
 
-SCREEN_WIDTH = 1152    # 1920 * 0.6
-SCREEN_HEIGHT = 648    # 1080 * 0.6
-
-"""
-카지노 번호별 색상 설정
-"""
-CASINO_COLOR = {
-    1: 'HEAVY YELLOW',
-    2: 'TURQUOISE',
-    3: 'LIME GREEN',
-    4: 'GOLD',
-    5: 'Lavender',
-    6: 'CORAL'
-}
-
+SCREEN_WIDTH = 1152  # 1920 * 0.6
+SCREEN_HEIGHT = 648  # 1080 * 0.6
 
 """
 색상 설정
@@ -28,17 +14,18 @@ CASINO_COLOR = {
 
 COLOR = {
     'WHITE': (255, 255, 255),
-    'BLACK': (0, 0, 0),         # for disruptor
-    'RED': (255, 0, 0),         # for player 1
-    'GREEN': (0, 255, 0),       # for player 2
-    'BLUE': (0, 0, 255),        # for player 3
-    'YELLOW': (255, 255, 0),    # for player 4
+    'BLACK': (0, 0, 0),                 # for disruptor
+    'RED': (255, 0, 0),                 # for player 1
+    'GREEN': (0, 255, 0),               # for player 2
+    'BLUE': (0, 0, 255),                # for player 3
+    'YELLOW': (255, 255, 0),            # for player 4
     'HEAVY YELLOW': (235, 180, 52),     # for casino 1
     'TURQUOISE': (64, 224, 208),        # for casino 2
     'LIME GREEN': (50, 205, 50),        # for casino 3
     'GOLD': (255, 215, 0),              # for casino 4
     'Lavender': (230, 230, 250),        # for casino 5
     'CORAL': (255, 127, 80),            # for casino 6
+    'GREEN_DARK': (56, 128, 34),
 }
 
 """
@@ -50,7 +37,7 @@ COLOR = {
 
 CASINO_WIDTH = 250
 CASINO_HEIGHT = 220
-PLAYERCARD_WIDTH = 180
+PLAYERCARD_WIDTH = 200
 PLAYERCARD_HEIGHT = 120
 ROLLINGBOARD_WIDTH = 300
 ROLLINGBOARD_HEIGHT = 400
@@ -72,3 +59,41 @@ ROLLINGBOARD_HEIGHT = 400
 Roll 버튼: (9155,470)
 Roll 판: (830,22)
 """
+
+CASINO_POSITION = {
+    1: (20, 22),
+    2: (290, 22),
+    3: (560, 22),
+    4: (20, 263),
+    5: (290, 263),
+    6: (560, 263)
+}
+
+PLAYERCARD_POSITION = {
+    0: (20, 528),
+    1: (235, 528),
+    2: (450, 528),
+    3: (665, 528)
+}
+
+"""
+카지노 번호별 색상 설정
+"""
+CASINO_COLOR = {
+    1: 'HEAVY YELLOW',
+    2: 'TURQUOISE',
+    3: 'LIME GREEN',
+    4: 'GOLD',
+    5: 'Lavender',
+    6: 'CORAL'
+}
+
+"""
+플레이어 번호별 색상 설정
+"""
+PLAYER_COLOR = {
+    0: "RED",
+    1: "GREEN",
+    2: "BLUE",
+    3: "YELLOW",
+}
