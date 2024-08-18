@@ -1,5 +1,5 @@
 import pygame
-from .settings import WIDTH, HEIGHT
+from .settings import SCREEN_WIDTH, SCREEN_HEIGHT
 
 
 class Board:
@@ -9,7 +9,7 @@ class Board:
     def run(self):
         pygame.init()
         pygame.display.set_caption('Las Vegas Board Game')
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
 
         running = True
 

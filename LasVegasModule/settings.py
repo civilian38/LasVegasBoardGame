@@ -4,6 +4,71 @@
 FHD(1920 * 1080) 기준 가로, 세로 0.6배
 """
 
-WIDTH = 1152    # 1920 * 0.6
-HEIGHT = 648    # 1080 * 0.6
+SCREEN_WIDTH = 1152    # 1920 * 0.6
+SCREEN_HEIGHT = 648    # 1080 * 0.6
 
+"""
+카지노 번호별 색상 설정
+"""
+CASINO_COLOR = {
+    1: 'HEAVY YELLOW',
+    2: 'TURQUOISE',
+    3: 'LIME GREEN',
+    4: 'GOLD',
+    5: 'Lavender',
+    6: 'CORAL'
+}
+
+
+"""
+색상 설정
+플레이어 색상: 빨강, 초록, 파랑11
+방해꾼 색상: 검정
+"""
+
+COLOR = {
+    'WHITE': (255, 255, 255),
+    'BLACK': (0, 0, 0),         # for disruptor
+    'RED': (255, 0, 0),         # for player 1
+    'GREEN': (0, 255, 0),       # for player 2
+    'BLUE': (0, 0, 255),        # for player 3
+    'YELLOW': (255, 255, 0),    # for player 4
+    'HEAVY YELLOW': (235, 180, 52),     # for casino 1
+    'TURQUOISE': (64, 224, 208),        # for casino 2
+    'LIME GREEN': (50, 205, 50),        # for casino 3
+    'GOLD': (255, 215, 0),              # for casino 4
+    'Lavender': (230, 230, 250),        # for casino 5
+    'CORAL': (255, 127, 80),            # for casino 6
+}
+
+"""
+프레임 넓이 설정
+카지노: 250 * 220
+플레이어 카드: 180 * 120
+주사위판: 300 * 400
+"""
+
+CASINO_WIDTH = 250
+CASINO_HEIGHT = 220
+PLAYERCARD_WIDTH = 180
+PLAYERCARD_HEIGHT = 120
+ROLLINGBOARD_WIDTH = 300
+ROLLINGBOARD_HEIGHT = 400
+
+"""
+프레임 위치 설정
+카지노 1: (20,22)
+카지노 2: (290,22)
+카지노 3: (560,22)
+카지노 4: (20,263)
+카지노 5: (290,263)
+카지노 6: (560,263)
+
+플레이어 카드 1: (20,528)
+플레이어 카드 2: (235,528)
+플레이어 카드 3: (450,528)
+플레이어 카드 4: (665,528)
+
+Roll 버튼: (9155,470)
+Roll 판: (830,22)
+"""
