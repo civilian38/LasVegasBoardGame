@@ -18,8 +18,8 @@ COLOR = {
     'RED': (255, 0, 0),                 # for player 1
     'GREEN': (0, 255, 0),               # for player 2
     'BLUE': (0, 0, 255),                # for player 3
-    'YELLOW': (255, 255, 0),            # for player 4
-    'HEAVY YELLOW': (235, 180, 52),     # for casino 1
+    'YELLOW': (235, 180, 52),            # for player 4
+    'HEAVY YELLOW': (255, 255, 0),     # for casino 1
     'TURQUOISE': (64, 224, 208),        # for casino 2
     'LIME GREEN': (50, 205, 50),        # for casino 3
     'GOLD': (255, 215, 0),              # for casino 4

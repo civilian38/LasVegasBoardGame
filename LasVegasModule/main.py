@@ -169,8 +169,9 @@ class Board:
                 for player in self.players:
                     if player.get_color() == player_color:
                         break
-                if casino.get_rewards():
-                    player.add_money(casino.get_rewards().pop().get_money())
+                if player.get_color() == player_color:
+                    if casino.get_rewards():
+                        player.add_money(casino.get_rewards().pop().get_money())
 
             for money in casino.get_rewards():
                 self.money_card.append(money)
@@ -188,7 +189,7 @@ class Board:
 
     def run(self):
         self.initialize()
-        while self.match < 4:
+        while self.match < 1:
             self.execute_match()
         first = (self.players[0], PLAYER_COLOR[0])
         for i in range(1, len(self.players)):
@@ -200,7 +201,18 @@ class Board:
 
         text_font = font.SysFont(None, 64)
         text_surface = text_font.render(first[1] + " WINS!", True, COLOR['WHITE'])
-        text_rect = text_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+        text_rect = text_surface.get_rect(center=(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) * 0.8))
+        self.screen.blit(text_surface, text_rect)
+
+        rank_table = str()
+        for i in range(0, len(self.players)):
+            rank_table += PLAYER_COLOR[i] + ": " + str(self.players[i].get_money())
+            if i != len(self.players) - 1:
+                rank_table += " | "
+        text_font = font.SysFont(None, 24)
+        text_surface = text_font.render(rank_table, True, COLOR['WHITE'])
+        text_rect = text_surface.get_rect(center=(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) * 1.2))
+
         self.screen.blit(text_surface, text_rect)
         pygame.display.flip()
 
