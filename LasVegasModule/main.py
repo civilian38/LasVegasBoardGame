@@ -1,9 +1,10 @@
 import math
+import random
 
 import pygame
 from .settings import COLOR, SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_COLOR, PLAYERCARD_POSITION, ROLL_BUTTON_POSITION, \
     ROLL_BUTTON_RADIUS, ROLL_BOARD_POSITION, CASINO_POSITION, CASINO_END_POSITION
-from .BaseClasses import Player, Casino, RollButton, RollingBoard
+from .BaseClasses import Player, Casino, RollButton, RollingBoard, Money
 
 
 class Board:
@@ -22,6 +23,7 @@ class Board:
             2: 'CHOOSE'  # 주사위 배치함
         }
         self.match = None
+        self.money_card = None
 
     # initialize game
     def initialize(self):
@@ -39,6 +41,7 @@ class Board:
         self.turn = 0
         self.roll_button = RollButton(COLOR['GRAY'])
         self.match = 0
+        self.money_card = [Money(100) for _ in range(6)] + [Money(200) for _ in range(8)] + [Money(300) for _ in range(8)] + [Money(400) for _ in range(6)] + [Money(500) for _ in range(6)] + [Money(600) for _ in range(5)] + [Money(700) for _ in range(5)] + [Money(800) for _ in range(5)] + [Money(900) for _ in range(5)]
 
     def draw(self):
         for player in self.players:
@@ -131,6 +134,12 @@ class Board:
             self.turn_state = 0
 
     def execute_match(self):
+        random.shuffle(self.money_card)
+        for casino in self.casinos:
+            while casino.get_rewards_sum() < 1000:
+                casino.add_rewards(self.money_card.pop())
+            casino.sort_rewards()
+
         while self.player_turn:
             self.execute_turn()
         for player in self.players:

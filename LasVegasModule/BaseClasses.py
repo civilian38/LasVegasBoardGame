@@ -4,7 +4,8 @@ import pygame
 from pygame import font
 
 from .settings import COLOR, CASINO_COLOR, CASINO_POSITION, CASINO_WIDTH, CASINO_HEIGHT, PLAYERCARD_WIDTH, \
-    PLAYERCARD_HEIGHT, ROLL_BUTTON_POSITION, ROLL_BUTTON_RADIUS, ROLL_BOARD_WIDTH, ROLL_BOARD_HEIGHT
+    PLAYERCARD_HEIGHT, ROLL_BUTTON_POSITION, ROLL_BUTTON_RADIUS, ROLL_BOARD_WIDTH, ROLL_BOARD_HEIGHT, MONEY_WIDTH, \
+    MONEY_HEIGHT
 
 
 class Dice:
@@ -62,7 +63,6 @@ class Player:
     def reset(self):
         self.dice = [Dice(self.color) for _ in range(8)] + [Dice(COLOR['BLACK']) for _ in range(2)]
 
-
     def get_black_dice_number(self):
         dice_number = len(self.dice)
         black_dice_number = 0
@@ -113,6 +113,7 @@ class Casino:
         self.number = number
         self.color = COLOR[CASINO_COLOR[number]]
         self.card_position = CASINO_POSITION[number]
+        self.rewards = list()
         self.container = {  # storing each color's number of dices
             COLOR['RED']: list(),
             COLOR['GREEN']: list(),
@@ -137,6 +138,18 @@ class Casino:
             else:
                 self.container[COLOR['BLACK']].append(die)
 
+    def add_rewards(self, reward):
+        self.rewards.append(reward)
+
+    def get_rewards_sum(self):
+        sum = 0
+        for reward in self.rewards:
+            sum += reward.get_money()
+        return sum
+
+    def sort_rewards(self):
+        self.rewards.sort(key=lambda x: x.get_money(), reverse=True)
+
     def update_screen(self, screen):
         card = pygame.Surface((CASINO_WIDTH, CASINO_HEIGHT))
         card.fill(self.color)
@@ -152,6 +165,9 @@ class Casino:
         for i in range(len(colors)):
             for j in range(len(self.container[COLOR[colors[i]]])):
                 self.container[COLOR[colors[i]]][j].draw_dice(card, 5 + (40 * j), 5 + (40 * i))
+
+        for i in range(len(self.rewards)):
+            self.rewards[i].draw(card, 205, 5 + (30 * i))
 
         # 프레임 버퍼 완성
         card.blit(text_surface, text_rect)
@@ -184,3 +200,20 @@ class RollingBoard:
         frame = pygame.Surface((ROLL_BOARD_WIDTH, ROLL_BOARD_HEIGHT))
         frame.fill(COLOR['GREEN_DARK'])
         return frame
+
+
+class Money:
+    def __init__(self, number):
+        self.money = number
+
+    def get_money(self):
+        return self.money
+
+    def draw(self, screen, x, y):
+        rect = pygame.Rect(x, y, MONEY_WIDTH, MONEY_HEIGHT)
+        pygame.draw.rect(screen, COLOR['DARK_PINK'], rect)
+
+        text_font = font.SysFont(None, 25)
+        text_surface = text_font.render(str(self.money), True, COLOR['WHITE'])
+        text_rect = text_surface.get_rect(center=(x + MONEY_WIDTH // 2, y + MONEY_HEIGHT // 2))
+        screen.blit(text_surface, text_rect)

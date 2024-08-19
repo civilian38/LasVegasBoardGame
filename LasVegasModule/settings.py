@@ -27,6 +27,7 @@ COLOR = {
     'CORAL': (255, 127, 80),            # for casino 6
     'GREEN_DARK': (56, 128, 34),
     'GRAY': (128, 128, 128),
+    'DARK_PINK': (112, 29, 57),
 }
 
 """
@@ -44,6 +45,9 @@ PLAYERCARD_HEIGHT = 120
 
 ROLL_BOARD_WIDTH = 300
 ROLL_BOARD_HEIGHT = 400
+
+MONEY_WIDTH = 40
+MONEY_HEIGHT = 25
 
 """
 프레임 위치 설정
