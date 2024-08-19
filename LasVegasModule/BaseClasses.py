@@ -3,7 +3,8 @@ import random
 import pygame
 from pygame import font
 
-from .settings import COLOR, CASINO_COLOR, CASINO_POSITION, CASINO_WIDTH, CASINO_HEIGHT, PLAYERCARD_WIDTH, PLAYERCARD_HEIGHT, ROLL_BUTTON_POSITION, ROLL_BUTTON_RADIUS
+from .settings import COLOR, CASINO_COLOR, CASINO_POSITION, CASINO_WIDTH, CASINO_HEIGHT, PLAYERCARD_WIDTH, \
+    PLAYERCARD_HEIGHT, ROLL_BUTTON_POSITION, ROLL_BUTTON_RADIUS, ROLL_BOARD_WIDTH, ROLL_BOARD_HEIGHT
 
 
 class Dice:
@@ -69,6 +70,12 @@ class Player:
 
     def add_money(self, money):
         self.money += money
+
+    def get_dice(self):
+        return self.dice
+
+    def get_color(self):
+        return self.color
 
     def update_screen(self, screen):
         card = pygame.Surface((PLAYERCARD_WIDTH, PLAYERCARD_HEIGHT))
@@ -136,3 +143,10 @@ class RollButton:
 
     def disable(self):
         self.enable = False
+
+
+class RollingBoard:
+    def get_frame(self):
+        frame = pygame.Surface((ROLL_BOARD_WIDTH, ROLL_BOARD_HEIGHT))
+        frame.fill(COLOR['GREEN_DARK'])
+        return frame

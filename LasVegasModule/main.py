@@ -1,23 +1,25 @@
 import math
 
 import pygame
-from .settings import COLOR, SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_COLOR, PLAYERCARD_POSITION, ROLL_BUTTON_POSITION, ROLL_BUTTON_RADIUS
-from .BaseClasses import Player, Casino, RollButton
+from .settings import COLOR, SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_COLOR, PLAYERCARD_POSITION, ROLL_BUTTON_POSITION, \
+    ROLL_BUTTON_RADIUS, ROLL_BOARD_POSITION
+from .BaseClasses import Player, Casino, RollButton, RollingBoard
 
 
 class Board:
     def __init__(self):
         self.roll_button = None
+        self.roll_board = RollingBoard()
         self.screen = None
         self.players = None
         self.casinos = None
         self.turn = None
         self.player_turn = None  # decides whose turn it is
-        self.turn_state = None   # decides which action has to be done
-        self.status = {     # what state can be done
-            0: 'START',     # 턴 시작
-            1: 'ROLL',      # 주사위 굴림
-            2: 'CHOOSE'     # 주사위 배치함
+        self.turn_state = None  # decides which action has to be done
+        self.status = {  # what state can be done
+            0: 'START',  # 턴 시작
+            1: 'ROLL',  # 주사위 굴림
+            2: 'CHOOSE'  # 주사위 배치함
         }
         self.match = None
 
@@ -56,6 +58,13 @@ class Board:
         # set status
         self.turn_state = self.status[0]
 
+        # find player
+        player = None
+        for player in self.players:
+            if player.get_color() == COLOR[self.player_turn[self.turn]]:
+                break
+
+        # roll the dice
         while self.turn_state == self.status[0]:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -66,12 +75,26 @@ class Board:
                     distance = math.sqrt(
                         (mouse_x - ROLL_BUTTON_POSITION[0]) ** 2 + (mouse_y - ROLL_BUTTON_POSITION[1]) ** 2
                     )
+
+                    # clicks roll button
                     if distance < ROLL_BUTTON_RADIUS:
                         self.roll_button.disable()
+                        dice = player.get_dice()
+
+                        frame = self.roll_board.get_frame()
+                        values = [[] for _ in range(6)]
+                        ypos = [17 + 52 * i for i in range(6)]
+                        for die in dice:
+                            die.roll()
+                            values[die.get_value() - 1].append(die)
+                        for die in values:
+                            y = ypos.pop()
+                            for i in range(len(die)):
+                                die[i].draw_dice(frame, 17 + 52 * i, y, size=48)
+                        self.screen.blit(frame, ROLL_BOARD_POSITION)
+
                         self.turn_state = self.status[1]
             self.draw()
-
-
 
     def run(self):
         self.initialize()
