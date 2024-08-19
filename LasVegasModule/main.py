@@ -134,14 +134,46 @@ class Board:
             self.turn_state = 0
 
     def execute_match(self):
+        # 매치 사전 설정
         random.shuffle(self.money_card)
         for casino in self.casinos:
             while casino.get_rewards_sum() < 1000:
                 casino.add_rewards(self.money_card.pop())
             casino.sort_rewards()
 
+        # 매치 진행
         while self.player_turn:
             self.execute_turn()
+
+        # 점수 계산
+        for casino in self.casinos:
+            dice = casino.get_container()
+            for key in dice.keys():
+                dice[key] = len(dice[key])
+
+            # 중복되는 값 모두 확인
+            count = dict()
+            for value in dice.values():
+                count[value] = count.get(value, 0) + 1
+
+            rank = list()
+            for key, value in sorted(dice.items(), key=lambda x: x[1], reverse=True):
+                if value != 0 and count[value] == 1 and key != 'BLACK':
+                    rank.append(key)
+
+            for player_color in rank:
+                # find player
+                player = None
+                for player in self.players:
+                    if player.get_color() == player_color:
+                        break
+                player.add_money(casino.get_rewards().pop().get_money())
+
+            for money in casino.get_rewards():
+                self.money_card.append(money)
+
+
+        # 턴 초기화
         for player in self.players:
             player.reset()
         for casino in self.casinos:

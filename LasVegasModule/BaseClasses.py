@@ -147,6 +147,12 @@ class Casino:
             sum += reward.get_money()
         return sum
 
+    def get_container(self):
+        return self.container
+
+    def get_rewards(self):
+        return self.rewards
+
     def sort_rewards(self):
         self.rewards.sort(key=lambda x: x.get_money(), reverse=True)
 
