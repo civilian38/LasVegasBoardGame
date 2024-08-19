@@ -2,6 +2,8 @@ import math
 import random
 
 import pygame
+from pygame import font
+
 from .settings import COLOR, SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_COLOR, PLAYERCARD_POSITION, ROLL_BUTTON_POSITION, \
     ROLL_BUTTON_RADIUS, ROLL_BOARD_POSITION, CASINO_POSITION, CASINO_END_POSITION
 from .BaseClasses import Player, Casino, RollButton, RollingBoard, Money
@@ -188,3 +190,23 @@ class Board:
         self.initialize()
         while self.match < 4:
             self.execute_match()
+        first = (self.players[0], PLAYER_COLOR[0])
+        for i in range(1, len(self.players)):
+            if self.players[i].get_money() > first[0].get_money():
+                first = (self.players[i], PLAYER_COLOR[i])
+
+        rect = pygame.Rect(SCREEN_WIDTH * 0.1, SCREEN_HEIGHT * 0.1, SCREEN_WIDTH * 0.8, SCREEN_HEIGHT * 0.8)
+        pygame.draw.rect(self.screen, COLOR['DARK_PINK'], rect)
+
+        text_font = font.SysFont(None, 64)
+        text_surface = text_font.render(first[1] + " WINS!", True, COLOR['WHITE'])
+        text_rect = text_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+        self.screen.blit(text_surface, text_rect)
+        pygame.display.flip()
+
+        game = True
+        while game:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    game = False
+        pygame.quit()
