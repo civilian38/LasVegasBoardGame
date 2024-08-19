@@ -167,7 +167,8 @@ class Board:
                 for player in self.players:
                     if player.get_color() == player_color:
                         break
-                player.add_money(casino.get_rewards().pop().get_money())
+                if casino.get_rewards():
+                    player.add_money(casino.get_rewards().pop().get_money())
 
             for money in casino.get_rewards():
                 self.money_card.append(money)
