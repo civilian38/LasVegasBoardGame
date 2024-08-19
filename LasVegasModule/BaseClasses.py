@@ -125,12 +125,12 @@ class RollButton:
         self.enable = True
 
     def draw(self, screen):
-        pygame.draw.circle(screen, self.color, ROLL_BUTTON_POSITION, ROLL_BUTTON_RADIUS)
-        text_font = font.SysFont(None, 32)
         if self.enable:
-            text_surface = text_font.render('ROLL', True, COLOR['WHITE'])
+            pygame.draw.circle(screen, self.color, ROLL_BUTTON_POSITION, ROLL_BUTTON_RADIUS)
         else:
-            text_surface = text_font.render('ROLL', True, COLOR['GRAY'])
+            pygame.draw.circle(screen, COLOR['GRAY'], ROLL_BUTTON_POSITION, ROLL_BUTTON_RADIUS)
+        text_font = font.SysFont(None, 32)
+        text_surface = text_font.render('ROLL', True, COLOR['WHITE'])
         text_rect = text_surface.get_rect(center=ROLL_BUTTON_POSITION)
         screen.blit(text_surface, text_rect)
 
