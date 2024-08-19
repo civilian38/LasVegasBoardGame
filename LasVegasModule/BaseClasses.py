@@ -3,7 +3,7 @@ import random
 import pygame
 from pygame import font
 
-from .settings import COLOR, CASINO_COLOR, CASINO_POSITION, CASINO_WIDTH, CASINO_HEIGHT, PLAYERCARD_WIDTH, PLAYERCARD_HEIGHT
+from .settings import COLOR, CASINO_COLOR, CASINO_POSITION, CASINO_WIDTH, CASINO_HEIGHT, PLAYERCARD_WIDTH, PLAYERCARD_HEIGHT, ROLL_BUTTON_POSITION, ROLL_BUTTON_RADIUS
 
 
 class Dice:
@@ -119,3 +119,20 @@ class Casino:
         screen.blit(card, self.card_position)
 
 
+class RollButton:
+    def __init__(self, color):
+        self.color = color
+        self.enable = True
+
+    def draw(self, screen):
+        pygame.draw.circle(screen, self.color, ROLL_BUTTON_POSITION, ROLL_BUTTON_RADIUS)
+        text_font = font.SysFont(None, 32)
+        if self.enable:
+            text_surface = text_font.render('ROLL', True, COLOR['WHITE'])
+        else:
+            text_surface = text_font.render('ROLL', True, COLOR['GRAY'])
+        text_rect = text_surface.get_rect(center=ROLL_BUTTON_POSITION)
+        screen.blit(text_surface, text_rect)
+
+    def disable(self):
+        self.enable = False

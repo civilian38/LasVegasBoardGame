@@ -26,6 +26,7 @@ COLOR = {
     'Lavender': (230, 230, 250),        # for casino 5
     'CORAL': (255, 127, 80),            # for casino 6
     'GREEN_DARK': (56, 128, 34),
+    'GRAY': (128, 128, 128),
 }
 
 """
@@ -56,7 +57,7 @@ ROLLINGBOARD_HEIGHT = 400
 플레이어 카드 3: (450,528)
 플레이어 카드 4: (665,528)
 
-Roll 버튼: (9155,470)
+Roll 버튼: (915,470)
 Roll 판: (830,22)
 """
 
@@ -75,6 +76,9 @@ PLAYERCARD_POSITION = {
     2: (450, 528),
     3: (665, 528)
 }
+
+ROLL_BUTTON_RADIUS = 65
+ROLL_BUTTON_POSITION = (915 + ROLL_BUTTON_RADIUS, 470 + ROLL_BUTTON_RADIUS)
 
 """
 카지노 번호별 색상 설정
