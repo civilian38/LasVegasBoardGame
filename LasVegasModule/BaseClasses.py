@@ -59,6 +59,10 @@ class Player:
         self.dice = [Dice(color) for _ in range(8)] + [Dice(COLOR['BLACK']) for _ in range(2)]
         self.card_position = card_position
 
+    def reset(self):
+        self.dice = [Dice(self.color) for _ in range(8)] + [Dice(COLOR['BLACK']) for _ in range(2)]
+
+
     def get_black_dice_number(self):
         dice_number = len(self.dice)
         black_dice_number = 0
@@ -110,6 +114,15 @@ class Casino:
         self.color = COLOR[CASINO_COLOR[number]]
         self.card_position = CASINO_POSITION[number]
         self.container = {  # storing each color's number of dices
+            COLOR['RED']: list(),
+            COLOR['GREEN']: list(),
+            COLOR['BLUE']: list(),
+            COLOR['YELLOW']: list(),
+            COLOR['BLACK']: list(),
+        }
+
+    def reset(self):
+        self.container = {
             COLOR['RED']: list(),
             COLOR['GREEN']: list(),
             COLOR['BLUE']: list(),

@@ -133,15 +133,16 @@ class Board:
     def execute_match(self):
         while self.player_turn:
             self.execute_turn()
+        for player in self.players:
+            player.reset()
+        for casino in self.casinos:
+            casino.reset()
+        self.player_turn = ['RED', 'GREEN', 'BLUE', 'YELLOW']
+        self.turn = 0
+
         self.match += 1
 
     def run(self):
         self.initialize()
-        self.execute_match()
-
-        i = 1
-        while i:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    i = 0
-            i += 1
+        while self.match < 4:
+            self.execute_match()
