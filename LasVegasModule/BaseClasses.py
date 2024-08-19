@@ -9,6 +9,8 @@ from .settings import COLOR, CASINO_COLOR, CASINO_POSITION, CASINO_WIDTH, CASINO
 
 class Dice:
     def __init__(self, color):
+        if isinstance(color, str):
+            color = COLOR[color]
         self.color = color
         self.value = random.randint(1, 6)
 
@@ -46,6 +48,9 @@ class Dice:
         for pos in positions[self.value]:
             pygame.draw.circle(frame, self.color, pos, radius)
 
+    def __str__(self):
+        return str(self.color) + str(self.value)
+
 
 class Player:
     def __init__(self, color, card_position):
@@ -73,6 +78,9 @@ class Player:
 
     def get_dice(self):
         return self.dice
+
+    def remove_dice_by_number(self, number):
+        self.dice = list(filter(lambda die: die.get_value() != number, self.dice))
 
     def get_color(self):
         return self.color
@@ -102,12 +110,19 @@ class Casino:
         self.color = COLOR[CASINO_COLOR[number]]
         self.card_position = CASINO_POSITION[number]
         self.container = {  # storing each color's number of dices
-            COLOR['RED']: 0,
-            COLOR['GREEN']: 0,
-            COLOR['BLUE']: 0,
-            COLOR['YELLOW']: 0,
-            COLOR['BLACK']: 0,
+            COLOR['RED']: list(),
+            COLOR['GREEN']: list(),
+            COLOR['BLUE']: list(),
+            COLOR['YELLOW']: list(),
+            COLOR['BLACK']: list(),
         }
+
+    def add_container(self, dice, color):
+        for die in dice:
+            if die.get_color() == color:
+                self.container[color].append(die)
+            else:
+                self.container[COLOR['BLACK']].append(die)
 
     def update_screen(self, screen):
         card = pygame.Surface((CASINO_WIDTH, CASINO_HEIGHT))
@@ -118,6 +133,12 @@ class Casino:
         text_surface = text_font.render(str(self.number), True, COLOR['BLACK'])
         text_rect = text_surface.get_rect()
         text_rect.bottomright = (CASINO_WIDTH - 5, CASINO_HEIGHT - 5)
+
+        # 주사위 출력
+        colors = ['RED', 'GREEN', 'BLUE', 'YELLOW', 'BLACK']
+        for i in range(len(colors)):
+            for j in range(len(self.container[COLOR[colors[i]]])):
+                self.container[COLOR[colors[i]]][j].draw_dice(card, 5 + (40 * j), 5 + (40 * i))
 
         # 프레임 버퍼 완성
         card.blit(text_surface, text_rect)

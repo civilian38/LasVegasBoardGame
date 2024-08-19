@@ -2,7 +2,7 @@ import math
 
 import pygame
 from .settings import COLOR, SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_COLOR, PLAYERCARD_POSITION, ROLL_BUTTON_POSITION, \
-    ROLL_BUTTON_RADIUS, ROLL_BOARD_POSITION
+    ROLL_BUTTON_RADIUS, ROLL_BOARD_POSITION, CASINO_POSITION, CASINO_END_POSITION
 from .BaseClasses import Player, Casino, RollButton, RollingBoard
 
 
@@ -96,9 +96,48 @@ class Board:
                         self.turn_state = self.status[1]
             self.draw()
 
+        # place dice
+        while self.turn_state == self.status[1]:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.turn_state = - 1
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_x, mouse_y = pygame.mouse.get_pos()
+                    casino = None
+                    for i in range(1, 7):
+                        if (CASINO_POSITION[i][0] <= mouse_x <= CASINO_END_POSITION[i][0] and
+                                CASINO_POSITION[i][1] <= mouse_y <= CASINO_END_POSITION[i][1]):
+                            casino = i
+                            break
+
+                    if casino and values[casino - 1]:
+                        self.casinos[casino - 1].add_container(values[casino - 1], COLOR[self.player_turn[self.turn]])
+                        player.remove_dice_by_number(casino)
+                        self.turn_state = self.status[2]
+            self.draw()
+
+        # ending turn
+        while self.turn_state == self.status[2]:
+            if len(player.get_dice()) == 0:
+                self.player_turn.remove(self.player_turn[self.turn])
+                self.turn -= 1
+            self.turn += 1
+            if self.turn >= len(self.player_turn):
+                self.turn = 0
+            frame = self.roll_board.get_frame()
+            self.screen.blit(frame, ROLL_BOARD_POSITION)
+            self.draw()
+            self.turn_state = 0
+
+    def execute_match(self):
+        while self.player_turn:
+            self.execute_turn()
+        self.match += 1
+
     def run(self):
         self.initialize()
-        self.execute_turn()
+        self.execute_match()
 
         i = 1
         while i:
