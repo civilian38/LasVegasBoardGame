@@ -113,3 +113,9 @@ PLAYER_COLOR = {
     2: "BLUE",
     3: "YELLOW",
 }
+
+
+"""
+총 라운드 수
+"""
+TOTAL_ROUND = 4

@@ -5,7 +5,7 @@ import pygame
 from pygame import font
 
 from .settings import COLOR, SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_COLOR, PLAYERCARD_POSITION, ROLL_BUTTON_POSITION, \
-    ROLL_BUTTON_RADIUS, ROLL_BOARD_POSITION, CASINO_POSITION, CASINO_END_POSITION
+    ROLL_BUTTON_RADIUS, ROLL_BOARD_POSITION, CASINO_POSITION, CASINO_END_POSITION, TOTAL_ROUND
 from .BaseClasses import Player, Casino, RollButton, RollingBoard, Money
 
 
@@ -189,7 +189,7 @@ class Board:
 
     def run(self):
         self.initialize()
-        while self.match < 1:
+        while self.match < TOTAL_ROUND:
             self.execute_match()
         first = (self.players[0], PLAYER_COLOR[0])
         for i in range(1, len(self.players)):
